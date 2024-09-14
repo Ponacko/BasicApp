@@ -1,10 +1,11 @@
-package com.example.basicapp
+package com.example.basicapp.ui
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.basicapp.R
 import com.example.basicapp.model.Item
 
 class ItemAdapter(
