@@ -3,8 +3,10 @@ package com.example.basicapp
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.basicapp.model.Item
 import com.example.basicapp.repository.ItemRepository
+import kotlinx.coroutines.launch
 
 class MainViewModel(
     private val itemRepository: ItemRepository
@@ -15,6 +17,8 @@ class MainViewModel(
         get() = _items
 
     fun fetchItems() {
-        _items.value = itemRepository.getItemsFromApi()
+        viewModelScope.launch {
+            _items.value = itemRepository.getItemsFromApi()
+        }
     }
 }

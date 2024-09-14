@@ -9,5 +9,5 @@ class ItemRepository(
         // TODO implement
     }
 
-    fun getItemsFromApi() = itemNetworkSource.fetchItems()
+    suspend fun getItemsFromApi() = itemNetworkSource.fetchItems()
 }
