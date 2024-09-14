@@ -1,5 +1,6 @@
 package com.example.basicapp
 
+import com.example.basicapp.data.databaseModule
 import com.example.basicapp.network.FakeItemNetworkSource
 import com.example.basicapp.network.ItemNetworkSource
 import com.example.basicapp.repository.ItemRepository
@@ -13,3 +14,5 @@ val appModule = module {
 
     viewModelOf(::MainViewModel)
 }
+
+val allModules = listOf(appModule, databaseModule)
