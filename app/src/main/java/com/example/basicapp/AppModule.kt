@@ -13,7 +13,7 @@ val appModule = module {
 
     single { UserRepository(get()) }
     single<ItemNetworkSource> { FakeItemNetworkSource() }
-    single { ItemRepository(get()) }
+    single { ItemRepository(get(), get()) }
 
     viewModelOf(::MainViewModel)
 }
