@@ -1,9 +1,11 @@
 package com.example.basicapp
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.ProgressBar
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -25,15 +27,30 @@ class MainActivity : ComponentActivity() {
         recyclerView.adapter = ItemAdapter(emptyList())
 
         fetchButton.setOnClickListener {
-            // Show loading indicator while data is being fetched
             progressBar.visibility = View.VISIBLE
+            recyclerView.visibility = View.GONE
             viewModel.fetchItems()
         }
         viewModel.items.observe(this) { items ->
-            // Hide loading indicator when data is available
             progressBar.visibility = View.GONE
+            recyclerView.visibility = View.VISIBLE
             (recyclerView.adapter as ItemAdapter).submitList(items.toMutableList())
         }
+        viewModel.error.observe(this) { errorMessage ->
+            progressBar.visibility = View.GONE
+            recyclerView.visibility = View.VISIBLE
+            showErrorDialog(errorMessage)
+        }
+    }
 
+    private fun showErrorDialog(message: String?) {
+        AlertDialog.Builder(this)
+            .setTitle("Error")
+            .setMessage(message ?: "An unknown error occurred.")
+            .setPositiveButton("OK") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .setCancelable(false)
+            .show()
     }
 }
