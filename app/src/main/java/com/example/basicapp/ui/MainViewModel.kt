@@ -15,7 +15,7 @@ import java.io.IOException
 class MainViewModel(
     private val itemRepository: ItemRepository,
     private val userRepository: UserRepository
-): ViewModel() {
+) : ViewModel() {
 
     private val _items = MutableLiveData<List<Item>>()
     val items: LiveData<List<Item>> get() = _items
@@ -61,7 +61,13 @@ class MainViewModel(
     fun saveUser() {
         val user = User(firstName.value ?: "", lastName.value ?: "")
         viewModelScope.launch {
-            userRepository.saveUserToDatabase(user)
+            try {
+                userRepository.saveUserToDatabase(user)
+            } catch (e: IOException) {
+                _error.value = "Database error. ${e.message}"
+            } catch (e: Exception) {
+                _error.value = "An unexpected error occurred: ${e.message}"
+            }
         }
         _savedUser.value = user
     }
@@ -77,9 +83,11 @@ class MainViewModel(
             try {
                 userRepository.deleteUserFromDatabase(id)
                 _savedUser.value = null
+            } catch (e: IOException) {
+                _error.value = "Database error ${e.message}"
             } catch (e: Exception) {
-            _error.value = "Failed to delete user: ${e.message}"
-        }
+                _error.value = "Failed to delete user: ${e.message}"
+            }
         }
     }
 }
