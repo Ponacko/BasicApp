@@ -13,7 +13,5 @@ class MainViewModel(
     val items: LiveData<Int>
         get() = _items
 
-    fun fetchData() {
-        // TODO implement data fetch
-    }
+    fun fetchData() = itemRepository.getItemsFromApi()
 }
