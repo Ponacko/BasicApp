@@ -1,57 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <ProgressBar
-        android:id="@+id/progressBar"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.example.basicapp.ui.MainViewModel" />
+    </data>
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:layout_gravity="center"
-        android:visibility="gone"/>
-    <androidx.recyclerview.widget.RecyclerView
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        android:id="@+id/recyclerView"
-        android:orientation="vertical"
-        android:background="@color/white"
-        android:layout_width="match_parent"
-        android:layout_height="300dp"/>
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_gravity="center"
+            app:visibility="@{viewModel.isLoading}" />
 
-    <Button
-        android:id="@+id/fetchButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Fetch items"/>
+        <androidx.recyclerview.widget.RecyclerView
 
-    <EditText
-        android:id="@+id/firstName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="Enter first name"
-        android:inputType="text"/>
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:background="@color/white"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:orientation="vertical"
+            app:items="@{viewModel.items}"
+            app:visibility="@{!viewModel.isLoading}" />/>
 
-    <EditText
-        android:id="@+id/lastName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="Enter last name"
-        android:inputType="text"/>
+        <Button
+            android:id="@+id/fetchButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{() -> viewModel.fetchItems()}"
+            android:text="Fetch items" />
 
-    <Button
-        android:id="@+id/saveButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Save user"/>
-    <Button
-        android:id="@+id/loadButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Load user"/>
+        <EditText
+            android:id="@+id/firstName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Enter first name"
+            android:inputType="text"
+            android:text="@={viewModel.firstName}" />
 
-    <TextView
-        android:id="@+id/loadedUserText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Loaded user data"/>
+        <EditText
+            android:id="@+id/lastName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Enter last name"
+            android:inputType="text"
+            android:text="@={viewModel.lastName}" />
 
-</LinearLayout>
+        <Button
+            android:id="@+id/saveButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{() -> viewModel.saveUser(viewModel.createUserFromInput(viewModel.firstName, viewModel.lastName))}"
+            android:text="Save user" />
+
+        <Button
+            android:id="@+id/loadButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{() -> viewModel.loadUser(1)}"
+            android:text="Load user" />
+
+        <TextView
+            android:id="@+id/loadedUserText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{viewModel.user.firstName + ` ` + viewModel.user.lastName}" />
+
+    </LinearLayout>
+</layout>

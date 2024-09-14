@@ -18,14 +18,19 @@ class MainViewModel(
 ): ViewModel() {
 
     private val _items = MutableLiveData<List<Item>>()
-    val items: LiveData<List<Item>>
-        get() = _items
+    val items: LiveData<List<Item>> get() = _items
     private val _error = MutableLiveData<String>()
     val error: LiveData<String> get() = _error
     private val _user = MutableLiveData<User>()
     val user: LiveData<User> get() = _user
+    private val _isLoading = MutableLiveData<Boolean>()
+    val isLoading: LiveData<Boolean> get() = _isLoading
+
+    val firstName = MutableLiveData<String>()
+    val lastName = MutableLiveData<String>()
 
     fun fetchItems() {
+        _isLoading.value = true
         viewModelScope.launch {
             try {
                 val itemsFromApi = itemRepository.getItemsFromApi()
@@ -37,6 +42,7 @@ class MainViewModel(
             } catch (e: Exception) {
                 _error.value = "An unexpected error occurred: ${e.message}"
             }
+            _isLoading.value = false
         }
     }
 
