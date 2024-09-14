@@ -61,7 +61,10 @@ dependencies {
     implementation(libs.room.ktx)
     kapt(libs.room.compiler)
 
-    testImplementation (libs.junit)
+    testImplementation(libs.junit)
+    testImplementation(libs.coroutines.test)
+    testImplementation(libs.mockk)
+
     androidTestImplementation(libs.room.testing)
     androidTestImplementation(libs.coroutines.test)
     androidTestImplementation(libs.androidx.junit)

@@ -17,8 +17,4 @@ class UserRepository(
             userDao.insert(user)
         }
     }
-
-    fun getUserFromApi() {
-        // TODO implement
-    }
 }
