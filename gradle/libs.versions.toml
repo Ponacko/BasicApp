@@ -12,6 +12,7 @@ kotlin_coroutines_core = "1.7.3"
 room = "2.6.1"
 junitKtx = "1.2.1"
 mockk = "1.12.0"
+archCoreTesting = "2.1.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -30,6 +31,7 @@ room-testing = { module = "androidx.room:room-testing", version.ref = "room" }
 coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlin_coroutines_core" }
 androidx-junit-ktx = { group = "androidx.test.ext", name = "junit-ktx", version.ref = "junitKtx" }
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
+arch-core-testing = { module = "androidx.arch.core:core-testing", version.ref = "archCoreTesting" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
