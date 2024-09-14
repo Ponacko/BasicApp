@@ -58,6 +58,9 @@ class MainActivity : ComponentActivity() {
             displayList()
             showErrorDialog(errorMessage)
         }
+        viewModel.user.observe(this) { user ->
+            loadedUserText.text = "${user.firstName} ${user.lastName}"
+        }
     }
 
     private fun setOnClickListeners() {
