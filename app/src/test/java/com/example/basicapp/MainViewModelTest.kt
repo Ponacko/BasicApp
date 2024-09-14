@@ -50,14 +50,17 @@ class MainViewModelTest {
 
     @Before
     fun setup() {
-        mainViewModel = MainViewModel(itemRepository, userRepository)
-
         Dispatchers.setMain(testDispatcher)
+        mainViewModel = MainViewModel(itemRepository, userRepository)
 
         mainViewModel.items.observeForever(itemsObserver)
         mainViewModel.error.observeForever(errorObserver)
         mainViewModel.savedUser.observeForever(userObserver)
         mainViewModel.isLoading.observeForever(isLoadingObserver)
+
+        coEvery { itemRepository.getItemsFromDatabase() } returns emptyList()
+        val mockUser = User("Jane", "Doe").apply { id = 0 }
+        coEvery { userRepository.getUserFromDatabase(0) } returns mockUser
     }
 
     @After
@@ -122,14 +125,14 @@ class MainViewModelTest {
 
     @Test
     fun `test loadUser success`() = runTest(testDispatcher) {
-        val mockUser = User("Jane", "Doe").apply { id = 1 }
-        coEvery { userRepository.getUserFromDatabase(1) } returns mockUser
+        val mockUser = User("Jane", "Doe").apply { id = 0 }
+        coEvery { userRepository.getUserFromDatabase(0) } returns mockUser
 
-        mainViewModel.loadUser(1)
+        mainViewModel.loadUser(0)
 
         advanceUntilIdle()
 
-        coVerify { userRepository.getUserFromDatabase(1) }
+        coVerify { userRepository.getUserFromDatabase(0) }
         coVerify { userObserver.onChanged(mockUser) }
         assertEquals(mockUser, mainViewModel.savedUser.value)
     }

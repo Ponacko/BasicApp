@@ -48,7 +48,7 @@ class UserDaoTest {
 
         userDao.insert(user)
 
-        val insertedUser = userDao.getById(1)
+        val insertedUser = userDao.getById(0)
 
         assertNotNull(insertedUser)
         assertEquals("John", insertedUser.firstName)
@@ -60,11 +60,11 @@ class UserDaoTest {
         val user = User(firstName = "Jane", lastName = "Smith")
         userDao.insert(user)
 
-        val userToDelete = userDao.getById(1)
+        val userToDelete = userDao.getById(0)
         userDao.delete(userToDelete)
 
         val deletedUser = try {
-            userDao.getById(1)
+            userDao.getById(0)
         } catch (e: Exception) {
             null
         }

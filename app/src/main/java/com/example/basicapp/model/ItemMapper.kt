@@ -2,7 +2,6 @@ package com.example.basicapp.model
 
 import com.example.basicapp.data.ItemEntity
 
-// Define a mapper object
 object ItemMapper {
 
     private fun mapToEntity(item: Item): ItemEntity {
