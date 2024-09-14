@@ -4,7 +4,6 @@ import com.example.basicapp.model.Item
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
-import java.io.IOException
 import kotlin.random.Random
 
 class FakeItemNetworkSource: ItemNetworkSource {
