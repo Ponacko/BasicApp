@@ -31,7 +31,14 @@ class MainViewModel(
 
     init {
         loadUser(0)
-        fetchItems()
+        viewModelScope.launch {
+            val itemsFromDatabase = itemRepository.getItemsFromDatabase()
+            if (itemsFromDatabase.isNotEmpty()) {
+                _items.value = itemsFromDatabase
+            } else {
+                fetchItems()
+            }
+        }
     }
 
     fun fetchItems() {
