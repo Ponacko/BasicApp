@@ -2,7 +2,9 @@ package com.example.basicapp.ui
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.example.basicapp.R
 import com.example.basicapp.databinding.ItemViewBinding
 import com.example.basicapp.model.Item
 
@@ -13,7 +15,10 @@ class ItemAdapter(
     class ItemViewHolder(val binding: ItemViewBinding): RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
-        val binding = ItemViewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = DataBindingUtil.inflate<ItemViewBinding>(
+            LayoutInflater.from(parent.context),
+            R.layout.item_view, parent, false
+        )
         return ItemViewHolder(binding)
     }
 
@@ -21,7 +26,7 @@ class ItemAdapter(
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         val currentItem = itemList[position]
-        holder.binding.itemTitle.text = currentItem.name
+        holder.binding.item = currentItem
     }
 
     fun submitList(newItemList: List<Item>) {
