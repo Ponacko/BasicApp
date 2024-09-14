@@ -61,18 +61,18 @@
             android:onClick="@{() -> viewModel.saveUser()}"
             android:text="Save user" />
 
-        <Button
-            android:id="@+id/loadButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="@{() -> viewModel.loadUser(1)}"
-            android:text="Load user" />
-
         <TextView
             android:id="@+id/loadedUserText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{viewModel.user.firstName + ` ` + viewModel.user.lastName}" />
+            app:text="@{viewModel.savedUser}" />
+
+        <Button
+            android:id="@+id/deleteButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{() -> viewModel.deleteUser(0)}"
+            android:text="Delete user" />
 
     </LinearLayout>
 </layout>

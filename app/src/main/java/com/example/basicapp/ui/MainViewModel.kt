@@ -21,13 +21,17 @@ class MainViewModel(
     val items: LiveData<List<Item>> get() = _items
     private val _error = MutableLiveData<String>()
     val error: LiveData<String> get() = _error
-    private val _user = MutableLiveData<User>()
-    val user: LiveData<User> get() = _user
+    private val _savedUser = MutableLiveData<User?>()
+    val savedUser: LiveData<User?> get() = _savedUser
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> get() = _isLoading
 
     val firstName = MutableLiveData<String>()
     val lastName = MutableLiveData<String>()
+
+    init {
+        loadUser(0)
+    }
 
     fun fetchItems() {
         _isLoading.value = true
@@ -51,11 +55,23 @@ class MainViewModel(
         viewModelScope.launch {
             userRepository.saveUserToDatabase(user)
         }
+        _savedUser.value = user
     }
 
     fun loadUser(id: Int) {
         viewModelScope.launch {
-            _user.value = userRepository.getUserFromDatabase(id)
+            _savedUser.value = userRepository.getUserFromDatabase(id)
+        }
+    }
+
+    fun deleteUser(id: Int) {
+        viewModelScope.launch {
+            try {
+                userRepository.deleteUserFromDatabase(id)
+                _savedUser.value = null
+            } catch (e: Exception) {
+            _error.value = "Failed to delete user: ${e.message}"
+        }
         }
     }
 }

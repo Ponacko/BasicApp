@@ -42,7 +42,7 @@ class MainViewModelTest {
 
     private val itemsObserver: Observer<List<Item>> = mockk(relaxed = true)
     private val errorObserver: Observer<String> = mockk(relaxed = true)
-    private val userObserver: Observer<User> = mockk(relaxed = true)
+    private val userObserver: Observer<User?> = mockk(relaxed = true)
     private val isLoadingObserver: Observer<Boolean> = mockk(relaxed = true)
 
     @get:Rule
@@ -56,7 +56,7 @@ class MainViewModelTest {
 
         mainViewModel.items.observeForever(itemsObserver)
         mainViewModel.error.observeForever(errorObserver)
-        mainViewModel.user.observeForever(userObserver)
+        mainViewModel.savedUser.observeForever(userObserver)
         mainViewModel.isLoading.observeForever(isLoadingObserver)
     }
 
@@ -66,7 +66,7 @@ class MainViewModelTest {
 
         mainViewModel.items.removeObserver(itemsObserver)
         mainViewModel.error.removeObserver(errorObserver)
-        mainViewModel.user.removeObserver(userObserver)
+        mainViewModel.savedUser.removeObserver(userObserver)
         mainViewModel.isLoading.removeObserver(isLoadingObserver)
     }
 
@@ -131,6 +131,6 @@ class MainViewModelTest {
 
         coVerify { userRepository.getUserFromDatabase(1) }
         coVerify { userObserver.onChanged(mockUser) }
-        assertEquals(mockUser, mainViewModel.user.value)
+        assertEquals(mockUser, mainViewModel.savedUser.value)
     }
 }

@@ -17,4 +17,11 @@ class UserRepository(
             userDao.insert(user)
         }
     }
+
+    suspend fun deleteUserFromDatabase(userId: Int) {
+        withContext(Dispatchers.IO) {
+            val user = userDao.getById(userId)
+            userDao.delete(user)
+        }
+    }
 }
