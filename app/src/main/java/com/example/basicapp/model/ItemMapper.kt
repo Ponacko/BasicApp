@@ -5,14 +5,14 @@ import com.example.basicapp.data.ItemEntity
 // Define a mapper object
 object ItemMapper {
 
-    fun mapToEntity(item: Item): ItemEntity {
+    private fun mapToEntity(item: Item): ItemEntity {
         return ItemEntity(
             id = item.id,
             name = item.name
         )
     }
 
-    fun mapToModel(itemEntity: ItemEntity): Item {
+    private fun mapToModel(itemEntity: ItemEntity): Item {
         return Item(
             id = itemEntity.id,
             name = itemEntity.name
