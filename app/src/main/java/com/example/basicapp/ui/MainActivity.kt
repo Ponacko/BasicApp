@@ -37,9 +37,9 @@ class MainActivity : ComponentActivity() {
 
     private fun showErrorDialog(message: String?) {
         AlertDialog.Builder(this)
-            .setTitle("Error")
-            .setMessage(message ?: "An unknown error occurred.")
-            .setPositiveButton("OK") { dialog, _ ->
+            .setTitle(getString(R.string.error))
+            .setMessage(message ?: getString(R.string.an_unknown_error_occurred))
+            .setPositiveButton(getString(R.string.ok)) { dialog, _ ->
                 dialog.dismiss()
             }
             .setCancelable(false)

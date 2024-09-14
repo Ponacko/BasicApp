@@ -4,6 +4,7 @@ import android.view.View
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.basicapp.R
 import com.example.basicapp.data.User
 import com.example.basicapp.model.Item
 
@@ -22,7 +23,8 @@ fun setVisibility(view: View, isVisible: Boolean) {
 
 @BindingAdapter("text")
 fun setUserText(textView: TextView, user: User?) {
+    val context = textView.context
     textView.text = user?.let {
-        "Saved user: ${it.firstName} ${it.lastName}"
-    } ?: "No user saved"
+        context.getString(R.string.saved_user, it.firstName, it.lastName)
+    } ?: context.getString(R.string.no_user_saved)
 }

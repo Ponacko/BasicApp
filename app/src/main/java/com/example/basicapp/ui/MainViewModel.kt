@@ -31,6 +31,7 @@ class MainViewModel(
 
     init {
         loadUser(0)
+        fetchItems()
     }
 
     fun fetchItems() {

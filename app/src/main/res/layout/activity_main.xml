@@ -36,13 +36,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="@{() -> viewModel.fetchItems()}"
-            android:text="Fetch items" />
+            android:text="@string/fetch_items" />
 
         <EditText
             android:id="@+id/firstName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="Enter first name"
+            android:hint="@string/enter_first_name"
             android:inputType="text"
             android:text="@={viewModel.firstName}" />
 
@@ -50,7 +50,7 @@
             android:id="@+id/lastName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="Enter last name"
+            android:hint="@string/enter_last_name"
             android:inputType="text"
             android:text="@={viewModel.lastName}" />
 
@@ -59,7 +59,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="@{() -> viewModel.saveUser()}"
-            android:text="Save user" />
+            android:text="@string/save_user" />
 
         <TextView
             android:id="@+id/loadedUserText"
@@ -72,7 +72,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="@{() -> viewModel.deleteUser(0)}"
-            android:text="Delete user" />
+            android:text="@string/delete_user" />
 
     </LinearLayout>
 </layout>

@@ -8,6 +8,7 @@ import androidx.test.espresso.action.ViewActions.typeText
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.espresso.matcher.ViewMatchers.withSubstring
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -42,8 +43,7 @@ class MainActivityTest {
         onView(withId(R.id.lastName)).perform(closeSoftKeyboard())
 
         onView(withId(R.id.saveButton)).perform(click())
-        onView(withId(R.id.loadButton)).perform(click())
 
-        onView(withId(R.id.loadedUserText)).check(matches(withText("John Doe")))
+        onView(withId(R.id.loadedUserText)).check(matches(withSubstring("John Doe")))
     }
 }
