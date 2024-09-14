@@ -30,8 +30,7 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:orientation="vertical"
             app:items="@{viewModel.items}"
-            app:visibility="@{!viewModel.isLoading}" />/>
-
+            app:visibility="@{!viewModel.isLoading}" />
         <Button
             android:id="@+id/fetchButton"
             android:layout_width="wrap_content"
@@ -59,7 +58,7 @@
             android:id="@+id/saveButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="@{() -> viewModel.saveUser(viewModel.createUserFromInput(viewModel.firstName, viewModel.lastName))}"
+            android:onClick="@{() -> viewModel.saveUser()}"
             android:text="Save user" />
 
         <Button

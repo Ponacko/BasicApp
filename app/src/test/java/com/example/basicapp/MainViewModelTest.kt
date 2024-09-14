@@ -10,6 +10,7 @@ import com.example.basicapp.ui.MainViewModel
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
+import io.mockk.slot
 import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.assertNull
 import kotlinx.coroutines.Dispatchers
@@ -102,14 +103,21 @@ class MainViewModelTest {
 
     @Test
     fun `test saveUser`() = runTest(testDispatcher) {
-        val mockUser = User("John", "Doe")
-        coEvery { userRepository.saveUserToDatabase(mockUser) } returns Unit
+        val expectedFirstName = "John"
+        val expectedLastName = "Doe"
+        mainViewModel.firstName.value = expectedFirstName
+        mainViewModel.lastName.value = expectedLastName
 
-        mainViewModel.saveUser(mockUser)
+        val userSlot = slot<User>()
+        coEvery { userRepository.saveUserToDatabase(capture(userSlot)) } returns Unit
+
+        mainViewModel.saveUser()
 
         advanceUntilIdle()
 
-        coVerify { userRepository.saveUserToDatabase(mockUser) }
+        assertEquals(expectedFirstName, userSlot.captured.firstName)
+        assertEquals(expectedLastName, userSlot.captured.lastName)
+        coVerify { userRepository.saveUserToDatabase(userSlot.captured) }
     }
 
     @Test
@@ -124,13 +132,5 @@ class MainViewModelTest {
         coVerify { userRepository.getUserFromDatabase(1) }
         coVerify { userObserver.onChanged(mockUser) }
         assertEquals(mockUser, mainViewModel.user.value)
-    }
-
-    @Test
-    fun `test createUserFromInput creates user correctly`() {
-        val user = mainViewModel.createUserFromInput("John", "Doe")
-
-        assertEquals("John", user.firstName)
-        assertEquals("Doe", user.lastName)
     }
 }

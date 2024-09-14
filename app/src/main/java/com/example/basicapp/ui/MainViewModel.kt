@@ -46,7 +46,8 @@ class MainViewModel(
         }
     }
 
-    fun saveUser(user: User) {
+    fun saveUser() {
+        val user = User(firstName.value ?: "", lastName.value ?: "")
         viewModelScope.launch {
             userRepository.saveUserToDatabase(user)
         }
@@ -57,6 +58,4 @@ class MainViewModel(
             _user.value = userRepository.getUserFromDatabase(id)
         }
     }
-
-    fun createUserFromInput(firstName: String, lastName: String) = User(firstName, lastName)
 }
