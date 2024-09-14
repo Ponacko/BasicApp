@@ -4,14 +4,17 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.basicapp.data.User
 import com.example.basicapp.model.Item
 import com.example.basicapp.repository.ItemRepository
+import com.example.basicapp.repository.UserRepository
 import kotlinx.coroutines.launch
 import org.json.JSONException
 import java.io.IOException
 
 class MainViewModel(
-    private val itemRepository: ItemRepository
+    private val itemRepository: ItemRepository,
+    private val userRepository: UserRepository
 ): ViewModel() {
 
     private val _items = MutableLiveData<List<Item>>()
@@ -19,6 +22,8 @@ class MainViewModel(
         get() = _items
     private val _error = MutableLiveData<String>()
     val error: LiveData<String> get() = _error
+    private val _user = MutableLiveData<User>()
+    val user: LiveData<User> get() = _user
 
     fun fetchItems() {
         viewModelScope.launch {
@@ -34,4 +39,18 @@ class MainViewModel(
             }
         }
     }
+
+    fun saveUser(user: User) {
+        viewModelScope.launch {
+            userRepository.saveUserToDatabase(user)
+        }
+    }
+
+    fun loadUser(id: Int) {
+        viewModelScope.launch {
+            _user.value = userRepository.getUserFromDatabase(id)
+        }
+    }
+
+    fun createUserFromInput(firstName: String, lastName: String) = User(firstName, lastName)
 }
