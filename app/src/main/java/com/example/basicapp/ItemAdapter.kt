@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.basicapp.model.Item
 
 class ItemAdapter(
-    private var itemList: MutableList<Item>
+    private var itemList: List<Item>
 ) : RecyclerView.Adapter<ItemAdapter.ItemViewHolder>() {
 
     class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -27,7 +27,7 @@ class ItemAdapter(
         holder.textView.text = currentItem.name
     }
 
-    fun submitList(newItemList: MutableList<Item>) {
+    fun submitList(newItemList: List<Item>) {
         this.itemList = newItemList
         notifyDataSetChanged()
     }
